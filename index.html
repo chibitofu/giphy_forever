@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Infinite Giphy</title>
+    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
+    <script src="scripts/ng-infinite-scroll.js"></script>
+    <script src="scripts/app.js"></script>
+  </head>
+  <body ng-app="GiphyApp">
+    <div class="container" ng-class="wrapper" ng-controller="HomeCtrl">
+      <div class="wrapper">
+      <div class="row">
+        <div class="col-xs-3 col-xs-offset-1 history">
+          <div class="history-div">
+            <h4>History</h4>
+            <div ng-repeat="search in searchHistory">
+              <button class="btn-sm btn-warning" ng-click="delete($index)">X</button>
+              <a ng-click=historySearch($index)>{{search}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4 col-xs-offset-0">
+          <img src="assets/cindysuen-giphy-upload.gif" class="img-responsive logo">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6-xs col-xs-offset-4">
+          <form class="search-bar" ng-submit="search()">
+            <p class="text-center">Search Giphy</p>
+            <div class="input-group">
+              <input type="text" class="form-control" ng-model="searchTerm">
+              <span class="input-group-btn">
+                <input type="submit" class="btn btn-danger" value="search">
+              </span>
+            </div>
+          </form>
+        </div>
+      </div> <!-- End of Row -->
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 gif-list" >
+          <div class="text-center" infinite-scroll="moreGifs()"
+          infinite-scroll-disable="busy" infinite-scroll-distance="0">
+            <div class="gifs text-center" ng-repeat="gif in gifs track by gif.embed_url">
+              <!-- Gif's go here -->
+              <img class="img-responsive" ng-src="{{gif.images.downsized.url}}">
+            </div>
+          </div>
+        </div>
+      </div>  <!-- End of Row -->
+    </div>
+    </div> <!-- End of Container -->
+  </body>
+</html>
